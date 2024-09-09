@@ -6,7 +6,7 @@ buildscript {
         }
 
         dependencies {
-            classpath 'com.android.tools.build:gradle:3.5.3'
+            classpath 'com.android.tools.build:gradle:7.4.0'
         }
     }
 }
@@ -18,8 +18,8 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('FaceDetection_compileSdkVersion', 29)
-    buildToolsVersion safeExtGet('FaceDetection_buildToolsVersion', '29.0.2')
+    compileSdkVersion safeExtGet('FaceDetection_compileSdkVersion', 30)
+    buildToolsVersion safeExtGet('FaceDetection_buildToolsVersion', '30.0.3')
     defaultConfig {
         minSdkVersion safeExtGet('FaceDetection_minSdkVersion', 16)
         targetSdkVersion safeExtGet('FaceDetection_targetSdkVersion', 29)
@@ -55,5 +55,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'com.google.mlkit:face-detection:16.1.2'
+    implementation 'com.google.mlkit:face-detection:16.1.7'
 }
