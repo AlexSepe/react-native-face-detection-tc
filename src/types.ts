@@ -86,7 +86,12 @@ export type FaceResult = {
     {
       type: number;
 
-      position: number;
+      position: [
+        {
+          x: number;
+          y: number;
+        }
+      ];
     }
   ];
 

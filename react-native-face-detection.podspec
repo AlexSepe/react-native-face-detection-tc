@@ -11,11 +11,11 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "10.0" }
-  s.source       = { :git => "https://github.com/nonth/react-native-face-detection.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/AlexSepe/react-native-face-detection-tc.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm}"
 
   s.dependency "React-Core"
 
-  s.dependency 'GoogleMLKit/FaceDetection', '2.2.0'
+  s.dependency 'GoogleMLKit/FaceDetection', '3.2.0'
 end

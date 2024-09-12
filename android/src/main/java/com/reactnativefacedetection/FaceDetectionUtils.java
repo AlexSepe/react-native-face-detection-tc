@@ -21,7 +21,8 @@ import static com.reactnativefacedetection.FaceDetectionCommon.*;
 
 public class FaceDetectionUtils {
     /**
-     * Create a Uri from the path, defaulting to file when there is no supplied scheme
+     * Create a Uri from the path, defaulting to file when there is no supplied
+     * scheme
      */
     public static Uri getUri(String uri) {
         Uri parsed = Uri.parse(uri);
@@ -35,41 +36,44 @@ public class FaceDetectionUtils {
 
     public static int[] rectToIntArray(@Nullable Rect rect) {
         if (rect == null || rect.isEmpty()) {
-          return new int[]{};
+            return new int[] {};
         }
 
-        return new int[]{
-          rect.left,
-          rect.top,
-          rect.right,
-          rect.bottom
+        return new int[] {
+                rect.left,
+                rect.top,
+                rect.right,
+                rect.bottom
         };
     }
 
     public static Map<String, Object> getLandmarkMap(FaceLandmark faceLandmark) {
         Map<String, Object> faceLandmarkMap = new HashMap<>();
-        faceLandmarkMap.put(KEY_TYPE, faceLandmark.getLandmarkType());
-        faceLandmarkMap.put(KEY_POSITION, getPointMap(faceLandmark.getPosition()));
-
+        if (faceLandmark != null) {
+            faceLandmarkMap.put(KEY_TYPE, faceLandmark.getLandmarkType());
+            faceLandmarkMap.put(KEY_POSITION, getPointMap(faceLandmark.getPosition()));
+        }
         return faceLandmarkMap;
     }
 
     public static float[] getPointMap(PointF point) {
-        return new float[]{point.x, point.y};
+        return new float[] { point.x, point.y };
     }
 
     public static Map<String, Object> getContourMap(FaceContour faceContour) {
         Map<String, Object> faceContourMap = new HashMap<>();
 
-        List<PointF> pointsListRaw = faceContour.getPoints();
-        List<float[]> pointsListFormatted = new ArrayList<>(pointsListRaw.size());
+        if (faceContour != null) {
+            List<PointF> pointsListRaw = faceContour.getPoints();
+            List<float[]> pointsListFormatted = new ArrayList<>(pointsListRaw.size());
 
-        for (PointF pointRaw : pointsListRaw) {
-            pointsListFormatted.add(getPointMap(pointRaw));
+            for (PointF pointRaw : pointsListRaw) {
+                pointsListFormatted.add(getPointMap(pointRaw));
+            }
+
+            faceContourMap.put(KEY_TYPE, faceContour.getFaceContourType());
+            faceContourMap.put(KEY_POINTS, pointsListFormatted);
         }
-
-        faceContourMap.put(KEY_TYPE, faceContour.getFaceContourType());
-        faceContourMap.put(KEY_POINTS, pointsListFormatted);
 
         return faceContourMap;
     }
@@ -79,7 +83,7 @@ public class FaceDetectionUtils {
         FaceDetectorOptions.Builder builder = new FaceDetectorOptions.Builder();
 
         if (faceDetectorOptionsBundle.getBoolean(KEY_ENABLE_TRACKING)) {
-          builder.enableTracking();
+            builder.enableTracking();
         }
 
         if (faceDetectorOptionsBundle.containsKey(KEY_CLASSIFICATION_MODE)) {
@@ -88,11 +92,12 @@ public class FaceDetectionUtils {
                 case FaceDetectorOptions.CLASSIFICATION_MODE_NONE:
                     builder.setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_NONE);
                     break;
-              case FaceDetectorOptions.CLASSIFICATION_MODE_ALL:
+                case FaceDetectorOptions.CLASSIFICATION_MODE_ALL:
                     builder.setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL);
                     break;
-              default:
-                    throw new IllegalArgumentException("Invalid 'classificationMode' Face Detector option, must be either 1 or 2.");
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid 'classificationMode' Face Detector option, must be either 1 or 2.");
             }
         }
 
@@ -105,8 +110,9 @@ public class FaceDetectionUtils {
                 case FaceDetectorOptions.CONTOUR_MODE_ALL:
                     builder.setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL);
                     break;
-            default:
-                throw new IllegalArgumentException("Invalid 'contourMode' Face Detector option, must be either 1 or 2.");
+                default:
+                    throw new IllegalArgumentException(
+                            "Invalid 'contourMode' Face Detector option, must be either 1 or 2.");
             }
         }
 
@@ -120,7 +126,8 @@ public class FaceDetectionUtils {
                     builder.setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL);
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid 'landmarkMode' Face Detector option, must be either 1 or 2.");
+                    throw new IllegalArgumentException(
+                            "Invalid 'landmarkMode' Face Detector option, must be either 1 or 2.");
             }
         }
 
@@ -139,8 +146,9 @@ public class FaceDetectionUtils {
                     builder.setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE);
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid 'performanceMode' Face Detector option, must be either 1 or 2.");
-      }
+                    throw new IllegalArgumentException(
+                            "Invalid 'performanceMode' Face Detector option, must be either 1 or 2.");
+            }
         }
 
         return builder.build();
