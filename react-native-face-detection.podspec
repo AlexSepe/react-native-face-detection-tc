@@ -2,6 +2,8 @@ require "json"
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
+Pod::UI.puts "[FaceDetection] Thank you for using FaceDetection TrueChange 💯❤️"
+
 Pod::Spec.new do |s|
   s.name         = "react-native-face-detection"
   s.version      = package["version"]
@@ -17,5 +19,5 @@ Pod::Spec.new do |s|
 
   s.dependency "React-Core"
 
-  s.dependency 'GoogleMLKit/FaceDetection', '3.2.0'
+  s.dependency 'GoogleMLKit/FaceDetection', '6.0.0'
 end
