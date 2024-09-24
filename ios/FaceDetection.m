@@ -17,6 +17,16 @@ static NSString *const RNFDErrorDomain = @"RNFDErrorDomain";
     return NO;
 }
 
+- (UIImage*)fixImageOrientation: (UIImage*)image
+  {
+      // [Workaround] Front camera fix
+      UIImage * portraitImage = [[UIImage alloc] initWithCGImage: image.CGImage
+                                                           scale: 1.0
+                                                     orientation: UIImageOrientationDownMirrored];
+      
+      return  portraitImage;
+}
+
 RCT_EXPORT_MODULE()
 
 RCT_REMAP_METHOD(processImage,
@@ -34,7 +44,9 @@ RCT_REMAP_METHOD(processImage,
             return;
         }
         
-        MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+        UIImage *_image = [self fixImageOrientation:image];
+        
+        MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:_image];
         visionImage.orientation = image.imageOrientation;
         
         MLKFaceDetectorOptions *options = [[MLKFaceDetectorOptions alloc] init];
