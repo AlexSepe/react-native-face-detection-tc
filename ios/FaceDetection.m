@@ -78,8 +78,13 @@ RCT_REMAP_METHOD(processImage,
         } else if (performanceMode == (NSInteger *) 2) {
           options.performanceMode = MLKFaceDetectorPerformanceModeAccurate;
         }
-
+        
         options.minFaceSize = (CGFloat) [faceDetectorOptions[@"minFaceSize"] doubleValue];
+        
+        options.classificationMode = MLKFaceDetectorClassificationModeAll;
+        options.contourMode = MLKFaceDetectorContourModeAll;
+        options.landmarkMode = MLKFaceDetectorLandmarkModeAll;
+        
         
         MLKFaceDetector *faceDetector = [MLKFaceDetector faceDetectorWithOptions:options];
         
